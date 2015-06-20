@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{9B32B307-6FBB-497E-A76F-3F8C4E168B25}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Iceland</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>Iceland</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchArch>i386</MtouchArch>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchProfiling>true</MtouchProfiling>
+    <MtouchUseRefCounting>true</MtouchUseRefCounting>
+    <MtouchI18n>
+    </MtouchI18n>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>i386</MtouchArch>
+    <ConsolePause>false</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;ENABLE_TEST_CLOUD;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchProfiling>true</MtouchProfiling>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\GameScene.sks" />
+    <BundleResource Include="Resources\pond.tmx" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
+    <InterfaceDefinition Include="Main.storyboard" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+    <None Include="Entitlements.plist" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="GameViewController.cs" />
+    <Compile Include="GameViewController.designer.cs">
+      <DependentUpon>GameViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameScene.cs" />
+    <Compile Include="Iceland.Characters\Character.cs" />
+    <Compile Include="Direction.cs" />
+    <Compile Include="Iceland.Map\Map.cs" />
+    <Compile Include="Iceland.Map\Tile.cs" />
+    <Compile Include="Iceland.Map\MapNode.cs" />
+    <Compile Include="Iceland.Characters\Skeleton.cs" />
+    <Compile Include="Iceland.Characters\Professor.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Iceland.Characters\" />
+    <Folder Include="Iceland.Map\" />
+    <Folder Include="Resources\TileImages.atlas\" />
+    <Folder Include="Resources\professor_walk_cycle_no_hat.atlas\" />
+    <Folder Include="Resources\skeleton_walk_cycle.atlas\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AtlasTexture Include="Resources\TileImages.atlas\beach.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachCornerES.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachCornerNE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachCornerNW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachCornerSW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachES.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachN.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachNE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachNW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachS.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachSW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\beachW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\bridgeEW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\bridgeNS.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\coniferAltShort.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\coniferAltTall.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\coniferShort.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\coniferTall.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\crossroad.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\crossroadESW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\crossroadNES.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\crossroadNEW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\crossroadNSW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\dirt.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\dirtDouble.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\endE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\endN.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\endS.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\endW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\exitE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\exitN.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\exitS.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\exitW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\grass.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\grassWhole.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\hillE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\hillES.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\hillN.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\hillNE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\hillNW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\hillS.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\hillSW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\hillW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\lotE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\lotES.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\lotN.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\lotNE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\lotNW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\lotS.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\lotSW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\lotW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverBankedES.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverBankedEW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverBankedNE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverBankedNS.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverBankedNW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverBankedSW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverES.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverEW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverNE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverNS.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverNW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\riverSW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\road.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadES.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadEW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadHill2E.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadHill2N.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadHill2S.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadHill2W.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadHillE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadHillN.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadHillS.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadHillW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadNE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadNS.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadNW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\roadSW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\treeAltShort.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\treeAltTall.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\treeShort.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\treeTall.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\water.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterCornerES.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterCornerNE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterCornerNW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterCornerSW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterES.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterN.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterNE.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterNW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterS.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterSW.png" />
+    <AtlasTexture Include="Resources\TileImages.atlas\waterW.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-0-0.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-0-1.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-0-2.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-0-3.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-0-4.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-0-5.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-0-6.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-0-7.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-0-8.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-1-0.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-1-1.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-1-2.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-1-3.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-1-4.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-1-5.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-1-6.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-1-7.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-1-8.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-2-0.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-2-1.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-2-2.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-2-3.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-2-4.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-2-5.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-2-6.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-2-7.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-2-8.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-3-0.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-3-1.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-3-2.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-3-3.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-3-4.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-3-5.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-3-6.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-3-7.png" />
+    <AtlasTexture Include="Resources\professor_walk_cycle_no_hat.atlas\professor_walk_cycle_no_hat-3-8.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-0-0.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-0-1.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-0-2.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-0-3.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-0-4.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-0-5.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-0-6.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-0-7.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-0-8.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-1-0.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-1-1.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-1-2.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-1-3.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-1-4.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-1-5.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-1-6.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-1-7.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-1-8.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-2-0.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-2-1.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-2-2.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-2-3.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-2-4.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-2-5.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-2-6.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-2-7.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-2-8.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-0.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-1.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-2.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-3.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-4.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-5.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-6.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-7.png" />
+    <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-8.png" />
+  </ItemGroup>
+</Project>
