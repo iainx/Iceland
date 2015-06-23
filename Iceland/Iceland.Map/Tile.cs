@@ -16,6 +16,47 @@ namespace Iceland.Map
         public CoreGraphics.CGSize Size { get; set; }
         public CoreGraphics.CGPoint Centre { get; set; }
 
+        [Flags]
+        public enum Exits {
+            None = 0,
+            North = 1,
+            South = 2,
+            East = 4,
+            West = 8
+        };
+
+        public Exits ValidExits { get; set; }
+
+        Exits ParseExits (string exitString)
+        {
+            Exits exits = Exits.None;
+
+            foreach (var exit in exitString.Split (',')) {
+                switch (exit) {
+                case "north":
+                    exits |= Exits.North;
+                    break;
+
+                case "south":
+                    exits |= Exits.South;
+                    break;
+
+                case "east":
+                    exits |= Exits.East;
+                    break;
+
+                case "west":
+                    exits |= Exits.West;
+                    break;
+
+                default:
+                    break;
+                }
+            }
+
+            return exits;
+        }
+
         public Tile (string filename, XElement properties)
         {
             ImageName = Path.GetFileNameWithoutExtension (filename);
@@ -31,6 +72,11 @@ namespace Iceland.Map
 
                     case "centre-y":
                         centreY = Convert.ToInt32 (propElement.Attribute ("value").Value);
+                        break;
+
+                    case "exits":
+                        ValidExits = ParseExits (propElement.Attribute ("value").Value);
+                        Console.WriteLine ("Exits: {0}", ValidExits);
                         break;
 
                     default:

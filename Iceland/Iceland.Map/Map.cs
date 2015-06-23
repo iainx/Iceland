@@ -56,6 +56,17 @@ namespace Iceland.Map
         {
         }
 
+        void GenerateMapGraph ()
+        {
+            int i = 0;
+            // GKGridGraph graph = new GkGridGraph.Init(Width, Height);
+            foreach (var tid in TIDS) {
+                Position pos = IndexToPosition (i);
+
+                i++;
+            }
+        }
+
         public static Map LoadFromFile (string filename)
         {
             XDocument input = XDocument.Load(filename);
@@ -139,19 +150,7 @@ namespace Iceland.Map
              
                 Int32 tsTileWidth = tsElem.Attribute("tilewidth") == null ? 0 : Convert.ToInt32(tsElem.Attribute("tilewidth").Value);
                 Int32 tsTileHeight = tsElem.Attribute("tileheight") == null ? 0 : Convert.ToInt32(tsElem.Attribute("tileheight").Value);
-//                Int32 tsSpacing = tsElem.Attribute("spacing") == null ? 0 : Convert.ToInt32(tsElem.Attribute("spacing").Value);
-//                Int32 tsMargin = tsElem.Attribute("margin") == null ? 0 : Convert.ToInt32(tsElem.Attribute("margin").Value);
 
-                /*
-                CoreGraphics.CGPoint tileCentre = new CoreGraphics.CGPoint (0f, 0f);
-                if (tsElem.Element("tileoffset") != null) {
-                    Int32 tsTileOffsetX = Convert.ToInt32(tsElem.Element("tileoffset").Attribute("x").Value);
-                    Int32 tsTileOffsetY = Convert.ToInt32(tsElem.Element("tileoffset").Attribute("y").Value);
-
-                    tileCentre.X = tsTileOffsetX;
-                    tileCentre.Y = tsTileOffsetY;
-                }
-*/
                 foreach (var tile in elem.Elements("tile")) {
                     UInt32 gid = Convert.ToUInt32 (tile.Attribute("id").Value);
                     var image = tile.Element ("image");
@@ -159,7 +158,6 @@ namespace Iceland.Map
                         continue;
                     }
 
-                    string exits = null;
                     XElement properties = tile.Element ("properties");
 
                     float imageWidth = Convert.ToSingle (image.Attribute("width").Value);
