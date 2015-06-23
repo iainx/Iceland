@@ -60,7 +60,7 @@ namespace Iceland.Map
         {
             int i = 0;
             // GKGridGraph graph = new GkGridGraph.Init(Width, Height);
-            foreach (var tid in TIDS) {
+            foreach (var tid in TIDs) {
                 Position pos = IndexToPosition (i);
 
                 i++;
@@ -70,42 +70,17 @@ namespace Iceland.Map
         public static Map LoadFromFile (string filename)
         {
             XDocument input = XDocument.Load(filename);
-
-            MapOrientation mapOrientation = MapOrientation.Unsupported;
-            switch (input.Document.Root.Attribute("orientation").Value) {
-            case "orthogonal":
-                mapOrientation = MapOrientation.Orthogonal;
-                break;
-
-            case "isometric":
-                mapOrientation = MapOrientation.Isometric;
-                break;
-
-            case "staggered":
-                mapOrientation = MapOrientation.Staggered;
-                break;
-
-            case "hexagonal":
-                mapOrientation = MapOrientation.Hexagonal;
-                break;
-
-            default:
-                mapOrientation = MapOrientation.Unsupported;
-                break;
-            }
-
-            if (mapOrientation == MapOrientation.Unsupported)
-                throw new NotSupportedException("Map - Unsupported map type: " + input.Document.Root.Attribute("orientation").Value);
+            var mapElement = input.Element ("map");
 
             String mapName = Path.GetFileNameWithoutExtension(filename);
-            float mapWidth = Convert.ToSingle(input.Document.Root.Attribute("width").Value);
-            float mapHeight = Convert.ToSingle(input.Document.Root.Attribute("height").Value);
-            float mapTileWidth = Convert.ToSingle(input.Document.Root.Attribute("tilewidth").Value);
-            float mapTileHeight = Convert.ToSingle(input.Document.Root.Attribute("tileheight").Value);
+            float mapWidth = Convert.ToSingle(mapElement.Attribute("width").Value);
+            float mapHeight = Convert.ToSingle(mapElement.Attribute("height").Value);
+            float mapTileWidth = Convert.ToSingle(mapElement.Attribute("tilewidth").Value);
+            float mapTileHeight = Convert.ToSingle(mapElement.Attribute("tileheight").Value);
 
             MapRenderOrder mapRenderOrder = MapRenderOrder.LeftDown;
-            if (input.Document.Root.Attribute("renderorder") != null) {
-                switch (input.Document.Root.Attribute("renderorder").Value) {
+            if (mapElement.Attribute("renderorder") != null) {
+                switch (mapElement.Attribute("renderorder").Value) {
                 case "right-down":
                     mapRenderOrder = MapRenderOrder.RightDown;
                     break;
@@ -137,7 +112,7 @@ namespace Iceland.Map
 
             Dictionary<UInt32, Tile> gidToTile = new Dictionary<UInt32, Tile>();
 
-            foreach (var elem in input.Document.Root.Elements("tileset")) {
+            foreach (var elem in mapElement.Elements("tileset")) {
                 UInt32 FirstGID = Convert.ToUInt32(elem.Attribute("firstgid").Value);
                 XElement tsElem = elem;
 
@@ -173,10 +148,8 @@ namespace Iceland.Map
 
             List<UInt32> gids = null;
 
-            foreach (var lElem in input.Document.Root.Elements()) {
-                if (lElem.Name.LocalName.Equals("layer")) {
-                    gids = parseLayer(lElem);
-                }
+            foreach (var lElem in mapElement.Elements("layer")) {
+                gids = parseLayer(lElem);
             }
 
             if (gids == null) {
