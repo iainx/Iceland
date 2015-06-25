@@ -100,6 +100,7 @@
     <Compile Include="Iceland.Map\MapNode.cs" />
     <Compile Include="Iceland.Characters\Skeleton.cs" />
     <Compile Include="Iceland.Characters\Professor.cs" />
+    <Compile Include="Iceland.Map\MapGraph.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

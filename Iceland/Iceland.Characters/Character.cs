@@ -52,13 +52,13 @@ namespace Iceland.Characters
         {
             // Setup the idle actions
             SKTextureAtlas atlas = SKTextureAtlas.FromName (spriteAtlasFilename);
-            idleNorthEastAction = SKAction.AnimateWithTextures (new SKTexture[] { atlas.TextureNamed (spriteAtlasFilename + "-3-0") }, 1.0);
-            idleSouthWestAction = SKAction.AnimateWithTextures (new SKTexture[] { atlas.TextureNamed (spriteAtlasFilename + "-1-0") }, 1.0);
+            idleNorthEastAction = SKAction.AnimateWithTextures (new SKTexture[] { atlas.TextureNamed (spriteAtlasFilename + "-1-0") }, 1.0);
+            idleSouthWestAction = SKAction.AnimateWithTextures (new SKTexture[] { atlas.TextureNamed (spriteAtlasFilename + "-3-0") }, 1.0);
 
             // Setup the walking action
-            SKTexture[] textArray = TextureArrayFromAtlas (atlas, spriteAtlasFilename, 3);
+            SKTexture[] textArray = TextureArrayFromAtlas (atlas, spriteAtlasFilename, 1);
             walkNorthEastAction = SKAction.AnimateWithTextures (textArray, 0.1);
-            textArray = TextureArrayFromAtlas (atlas, spriteAtlasFilename, 1);
+            textArray = TextureArrayFromAtlas (atlas, spriteAtlasFilename, 3);
             walkSouthWestAction = SKAction.AnimateWithTextures (textArray, 0.1);
 
             // Set the defaults

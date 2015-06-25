@@ -32,7 +32,7 @@ namespace Iceland
 
             player.PositionCharacter (new Map.Map.Position { Row = 0, Column = 1 });
 
-            player.Direction = Direction.South;
+            player.Direction = Direction.North;
             player.Walking = true;
         }
 

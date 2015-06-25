@@ -5,6 +5,8 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
+//using GameplayKit;
+
 namespace Iceland.Map
 {
     public class Map
@@ -16,6 +18,31 @@ namespace Iceland.Map
             public override string ToString ()
             {
                 return string.Format ("{0},{1}", Row, Column);
+            }
+
+            public Position PositionInDirection (Direction direction)
+            {
+                int dRow = 0, dColumn = 0;
+
+                switch (direction) {
+                case Direction.North:
+                    dColumn = -1;
+                    break;
+
+                case Direction.South:
+                    dColumn = 1;
+                    break;
+
+                case Direction.East:
+                    dRow = -1;
+                    break;
+
+                case Direction.West:
+                    dRow = 1;
+                    break;
+                }
+
+                return new Position { Row = Row + dRow, Column = Column + dColumn };
             }
         };
 
@@ -60,6 +87,7 @@ namespace Iceland.Map
         {
             int i = 0;
             // GKGridGraph graph = new GkGridGraph.Init(Width, Height);
+
             foreach (var tid in TIDs) {
                 Position pos = IndexToPosition (i);
 
@@ -234,6 +262,11 @@ namespace Iceland.Map
         public int ZLevelForPosition (Position position)
         {
             return ((position.Row * 11) * Width + (position.Column * 11)) + 11;
+        }
+
+        public bool PositionIsValid (Position position)
+        {
+            return !(position.Row < 0 || position.Column < 0 || position.Row >= Height || position.Column >= Width);
         }
     }
 }
