@@ -5,15 +5,15 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
-//using GameplayKit;
+using GameplayKit;
 
 namespace Iceland.Map
 {
     public class Map
     {
         public struct Position {
-            public int Row;
-            public int Column;
+            public int Row; // E -> W
+            public int Column; // N -> S
 
             public override string ToString ()
             {
@@ -43,6 +43,30 @@ namespace Iceland.Map
                 }
 
                 return new Position { Row = Row + dRow, Column = Column + dColumn };
+            }
+
+            public Direction DirectionToPosition (Position newPosition)
+            {
+                int dRow = Row - newPosition.Row;
+                int dColumn = Column - newPosition.Column;
+
+                if (dRow > 0) {
+                    return Direction.East;
+                }
+
+                if (dRow < 0) {
+                    return Direction.West;
+                }
+
+                if (dColumn > 0) {
+                    return Direction.North;
+                }
+
+                if (dColumn < 0) {
+                    return Direction.South;
+                }
+
+                return Direction.South;
             }
         };
 
@@ -79,20 +103,9 @@ namespace Iceland.Map
         public Dictionary<UInt32, Tile> TIDToTile { get; private set; }
         public UInt32[] TIDs { get; private set; }
 
+        public MapGraph Graph { get; private set; }
         public Map ()
         {
-        }
-
-        void GenerateMapGraph ()
-        {
-            int i = 0;
-            // GKGridGraph graph = new GkGridGraph.Init(Width, Height);
-
-            foreach (var tid in TIDs) {
-                Position pos = IndexToPosition (i);
-
-                i++;
-            }
         }
 
         public static Map LoadFromFile (string filename)
@@ -184,12 +197,16 @@ namespace Iceland.Map
                 return null;
             }
 
-            return new Map {
+            Map m = new Map {
                 Width = (int)mapWidth,
                 Height = (int)mapHeight,
                 TIDToTile = gidToTile,
                 TIDs = gids.ToArray ()
             };
+
+            m.Graph = new MapGraph (m);
+
+            return m;
         }
 
         static List<UInt32> parseLayer(XElement layerElement) {
@@ -267,6 +284,11 @@ namespace Iceland.Map
         public bool PositionIsValid (Position position)
         {
             return !(position.Row < 0 || position.Column < 0 || position.Row >= Height || position.Column >= Width);
+        }
+
+        public GKGraphNode[] FindPath (Position from, Position to)
+        {
+            return Graph.FindPath (from, to);
         }
     }
 }

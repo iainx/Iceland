@@ -67,8 +67,8 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="Xamarin.iOS" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
@@ -101,6 +101,9 @@
     <Compile Include="Iceland.Characters\Skeleton.cs" />
     <Compile Include="Iceland.Characters\Professor.cs" />
     <Compile Include="Iceland.Map\MapGraph.cs" />
+    <Compile Include="Iceland.Map\MapGraphNode.cs" />
+    <Compile Include="Iceland.Characters\CharacterEntity.cs" />
+    <Compile Include="Iceland.Characters\CharacterSpriteComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

@@ -37,6 +37,19 @@ namespace Iceland.Characters
         }
 
         public Map.Map OwningMap { get; set; }
+        Map.Map.Position currentPosition;
+        public Map.Map.Position CurrentPosition { 
+            get { 
+                return currentPosition;
+            } 
+
+            set {
+                CoreGraphics.CGPoint point = OwningMap.PositionToPoint (value, true);
+                Position = point;
+                ZPosition = OwningMap.ZLevelForPosition (value);
+                currentPosition = value;
+            }
+        }
 
         SKTexture[] TextureArrayFromAtlas (SKTextureAtlas atlas, string name, int row)
         {
@@ -79,13 +92,6 @@ namespace Iceland.Characters
                 RemoveActionForKey ("standingAction");
                 RunAction (idleNorthEastAction, "standingAction");
             }
-        }
-
-        public void PositionCharacter (Map.Map.Position position)
-        {
-            CoreGraphics.CGPoint point = OwningMap.PositionToPoint (position, true);
-            Position = point;
-            ZPosition = OwningMap.ZLevelForPosition (position);
         }
 
         public void MoveCharacter (Map.Map.Position position, Action completionHandler)

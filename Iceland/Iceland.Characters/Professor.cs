@@ -2,10 +2,11 @@
 
 namespace Iceland.Characters
 {
-    public class Professor : Character
+    public class Professor : CharacterEntity
     {
-        public Professor () : base ("professor_walk_cycle_no_hat")
+        public Professor ()
         {
+            AddComponent (new CharacterSpriteComponent ("professor_walk_cycle_no_hat"));
         }
     }
 }

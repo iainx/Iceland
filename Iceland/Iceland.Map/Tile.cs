@@ -76,7 +76,7 @@ namespace Iceland.Map
 
                     case "exits":
                         ValidExits = ParseExits (propElement.Attribute ("value").Value);
-                        Console.WriteLine ("Exits: {0}", ValidExits);
+                        Console.WriteLine ("Exits: {0} {1}", ImageName, ValidExits);
                         break;
 
                     default:

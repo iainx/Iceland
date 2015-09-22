@@ -1,11 +1,13 @@
 ﻿using System;
+using GameplayKit;
 
 namespace Iceland.Characters
 {
-    public class Skeleton : Character
+    public class Skeleton : CharacterEntity
     {
-        public Skeleton () : base ("skeleton_walk_cycle")
+        public Skeleton ()
         {
+            AddComponent (new CharacterSpriteComponent ("skeleton_walk_cycle"));
         }
     }
 }
