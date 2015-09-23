@@ -17,6 +17,7 @@ namespace Iceland
         CharacterEntity player;
         Map.Map map;
         MapNode mapNode;
+        SKCameraNode cameraNode;
 
         public GameScene (IntPtr handle) : base (handle)
         {
@@ -24,8 +25,19 @@ namespace Iceland
             map = Map.Map.LoadFromFile ("pond.tmx");
         }
 
+        void SetCameraConstraints (SKCameraNode camera, SKSpriteNode sprite)
+        {
+            var zeroRange = new SKRange (0, 200);
+            SKConstraint playerConstraint = SKConstraint.CreateDistance (zeroRange, sprite);
+            camera.Constraints = new SKConstraint[]{ playerConstraint };
+        }
+
         public override void DidMoveToView (SKView view)
         {
+            cameraNode = new SKCameraNode ();
+            Camera = cameraNode;
+            AddChild (cameraNode);
+
             mapNode = new MapNode (map);
             mapNode.Position = new CoreGraphics.CGPoint (Frame.Width / 2 - 200, Frame.Height / 2 + 200);
             AddChild (mapNode);
@@ -37,6 +49,8 @@ namespace Iceland
             var comp = (CharacterSpriteComponent)player.GetComponent (typeof(CharacterSpriteComponent));
             comp.Direction = Direction.North;
             comp.Walking = false;
+
+            SetCameraConstraints (cameraNode, comp.Sprite);
         }
 
         public override void TouchesBegan (NSSet touches, UIEvent evt)
