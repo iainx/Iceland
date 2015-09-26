@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using Foundation;
+using UIKit;
 using SpriteKit;
 using Iceland.Characters;
 
@@ -15,6 +17,8 @@ namespace Iceland.Map
         {
             this.map = map;
 
+            UserInteractionEnabled = true;
+
             int idx = 0;
 
             atlas = SKTextureAtlas.FromName ("TileImages");
@@ -24,6 +28,7 @@ namespace Iceland.Map
 
                 SKTexture tex = atlas.TextureNamed (t.ImageName);
                 SKSpriteNode node = SKSpriteNode.FromTexture (tex);
+                node.UserInteractionEnabled = false;
                 node.Position = position;
                 node.ZPosition = idx;
 
@@ -42,6 +47,32 @@ namespace Iceland.Map
             CoreGraphics.CGPoint point = map.PositionToPoint (character.CurrentPosition, true);
             spriteComp.Sprite.Position = point;
             spriteComp.Sprite.ZPosition = map.ZLevelForPosition (character.CurrentPosition);
+        }
+            
+        public event EventHandler<MapClickedArgs> MapClicked;
+
+        public override void TouchesEnded (NSSet touches, UIEvent evt)
+        {
+            base.TouchesEnded (touches, evt);
+
+            if (MapClicked != null) {
+                UITouch touch = (UITouch)touches.AnyObject;
+                CoreGraphics.CGPoint point = touch.LocationInNode (this);
+                Map.Position destination = map.PointToPosition (point);
+                if (!map.PositionIsValid (destination)) {
+                    return;
+                }
+                MapClickedArgs args = new MapClickedArgs (destination);
+                MapClicked (this, args);
+            }
+        }
+    }
+
+    public class MapClickedArgs:EventArgs
+    {
+        public Map.Position ClickPosition { get; private set; }
+        public MapClickedArgs (Map.Position pos) {
+            ClickPosition = pos;
         }
     }
 }

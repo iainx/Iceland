@@ -15,6 +15,7 @@ namespace Iceland
     public class GameScene : SKScene
     {
         CharacterEntity player;
+        CharacterEntity skeleton;
         Map.Map map;
         MapNode mapNode;
         SKCameraNode cameraNode;
@@ -22,6 +23,7 @@ namespace Iceland
         public GameScene (IntPtr handle) : base (handle)
         {
             player = new Professor ();
+            skeleton = new Skeleton ();
             map = Map.Map.LoadFromFile ("pond.tmx");
         }
 
@@ -39,8 +41,10 @@ namespace Iceland
             AddChild (cameraNode);
 
             mapNode = new MapNode (map);
-            mapNode.Position = new CoreGraphics.CGPoint (Frame.Width / 2 - 200, Frame.Height / 2 + 200);
+            mapNode.Position = new CGPoint (Frame.Width / 2 - 200, Frame.Height / 2 + 200);
             AddChild (mapNode);
+
+            mapNode.MapClicked += new EventHandler<MapClickedArgs>(HandleTouchOnMap);
 
             player.CurrentPosition = new Map.Map.Position { Row = 0, Column = 1 };
             player.Map = map;
@@ -50,21 +54,17 @@ namespace Iceland
             comp.Direction = Direction.North;
             comp.Walking = false;
 
+            skeleton.CurrentPosition = new Map.Map.Position { Row = 6, Column = 3 };
+            skeleton.Map = map;
+            mapNode.AddCharacter (skeleton);
+
             SetCameraConstraints (cameraNode, comp.Sprite);
         }
 
-        public override void TouchesBegan (NSSet touches, UIEvent evt)
+        void HandleTouchOnMap (object sender, MapClickedArgs args)
         {
-            UITouch touch = (UITouch)touches.AnyObject;
-            CoreGraphics.CGPoint point = touch.LocationInNode (mapNode);
-
-            Map.Map.Position destination = map.PointToPosition (point);
-            if (!map.PositionIsValid (destination)) {
-                return;
-            }
-
+            Map.Map.Position destination = args.ClickPosition;
             GKGraphNode[] path = map.FindPath (player.CurrentPosition, destination);
-
             CharacterSpriteComponent comp = (CharacterSpriteComponent)player.GetComponent (typeof(CharacterSpriteComponent));
             comp.FollowPath (path, () => Console.WriteLine ("Completed"));
         }

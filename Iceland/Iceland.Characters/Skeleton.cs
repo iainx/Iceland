@@ -7,7 +7,8 @@ namespace Iceland.Characters
     {
         public Skeleton ()
         {
-            AddComponent (new CharacterSpriteComponent ("skeleton_walk_cycle"));
+            AddComponent (new CharacterSpriteComponent ("skeleton_walk_cycle", this));
+            AddComponent (new ClickableComponent ());
         }
     }
 }

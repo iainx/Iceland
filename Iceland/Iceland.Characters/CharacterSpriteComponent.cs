@@ -40,7 +40,7 @@ namespace Iceland.Characters
             }
         }
 
-        public CharacterSpriteComponent (string spriteAtlasFilename)
+        public CharacterSpriteComponent (string spriteAtlasFilename, GKEntity entity)
         {
             // Setup the idle actions
             SKTextureAtlas atlas = SKTextureAtlas.FromName (spriteAtlasFilename);
@@ -53,17 +53,18 @@ namespace Iceland.Characters
             textArray = TextureArrayFromAtlas (atlas, spriteAtlasFilename, 3);
             walkSouthEastAction = SKAction.AnimateWithTextures (textArray, 0.1);
 
-            Sprite = new SKSpriteNode ();
+            Sprite = new EntityNode ();
             Sprite.Texture = atlas.TextureNamed (spriteAtlasFilename + "-1-0");
             Sprite.Size = new CoreGraphics.CGSize (64f, 64f);
             Sprite.AnchorPoint = new CoreGraphics.CGPoint (0.5f, 0.0f);
+            Sprite.UserInteractionEnabled = true;
+            ((EntityNode)Sprite).Entity = entity;
         }
 
         SKTexture[] TextureArrayFromAtlas (SKTextureAtlas atlas, string name, int row)
         {
             SKTexture[] textures = new SKTexture[8];
             for (int i = 0; i < 8; i++) {
-                Console.WriteLine (String.Format ("{0}-{1}-{2}", name, row, i + 1));
                 textures[i] = atlas.TextureNamed (String.Format ("{0}-{1}-{2}", name, row, i + 1));
             }
             return textures;
@@ -97,7 +98,6 @@ namespace Iceland.Characters
             
                 sequence.Add (SKAction.Run (() => {
                     Direction = centity.CurrentPosition.DirectionToPosition (node.NodePosition);
-                    Console.WriteLine ("{0} -> {1}: {2}", centity.CurrentPosition, node.NodePosition, Direction);
                     Walking = true;
                 }));
 

@@ -104,6 +104,8 @@
     <Compile Include="Iceland.Map\MapGraphNode.cs" />
     <Compile Include="Iceland.Characters\CharacterEntity.cs" />
     <Compile Include="Iceland.Characters\CharacterSpriteComponent.cs" />
+    <Compile Include="Iceland.Characters\ClickableComponent.cs" />
+    <Compile Include="Iceland.Characters\EntityNode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
