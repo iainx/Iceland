@@ -87,6 +87,8 @@ namespace Iceland.Characters
 
         #region Movement
 
+        static readonly string WalkingKey = "characterWalking";
+
         public void FollowPath (GKGraphNode[] path, Action completion)
         {
             var dropFirst = path.Skip (1);
@@ -109,8 +111,9 @@ namespace Iceland.Characters
                 }));
             }
 
+            Sprite.RemoveActionForKey (WalkingKey);
             sequence.Add (SKAction.Run (completion));
-            Sprite.RunAction (SKAction.Sequence (sequence.ToArray ()));
+            Sprite.RunAction (SKAction.Sequence (sequence.ToArray ()), WalkingKey);
         }
         #endregion
     }
