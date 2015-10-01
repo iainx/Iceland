@@ -9,6 +9,8 @@ namespace Iceland.Characters
         {
             AddComponent (new CharacterSpriteComponent ("skeleton_walk_cycle", this));
             AddComponent (new ClickableComponent ());
+            AddComponent (new TalkableComponent ());
+            AddComponent (new LookableComponent ());
         }
     }
 }

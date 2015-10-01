@@ -14,7 +14,7 @@ namespace Iceland
 {
     public class GameScene : SKScene
     {
-        CharacterEntity player;
+        public static CharacterEntity player;
         CharacterEntity skeleton;
         Map.Map map;
         MapNode mapNode;
@@ -41,7 +41,7 @@ namespace Iceland
             AddChild (cameraNode);
 
             mapNode = new MapNode (map);
-            mapNode.Position = new CGPoint (Frame.Width / 2 - 200, Frame.Height / 2 + 200);
+            mapNode.Position = new CGPoint ((Frame.Width - mapNode.Frame.Width) / 2, Frame.Height / 2 + 200);
             AddChild (mapNode);
 
             mapNode.MapClicked += new EventHandler<MapClickedArgs>(HandleTouchOnMap);
@@ -64,9 +64,8 @@ namespace Iceland
         void HandleTouchOnMap (object sender, MapClickedArgs args)
         {
             Map.Map.Position destination = args.ClickPosition;
-            GKGraphNode[] path = map.FindPath (player.CurrentPosition, destination);
-            CharacterSpriteComponent comp = (CharacterSpriteComponent)player.GetComponent (typeof(CharacterSpriteComponent));
-            comp.FollowPath (path, () => Console.WriteLine ("Completed"));
+            MoveComponent comp = (MoveComponent)player.GetComponent (typeof(MoveComponent));
+            comp.MoveEntity (destination, null);
         }
 
         public override void Update (double currentTime)

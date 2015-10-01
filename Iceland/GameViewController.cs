@@ -7,8 +7,24 @@ namespace Iceland
 {
     public partial class GameViewController : UIViewController
     {
+        EntityClickHandler clickHandler;
+
         public GameViewController (IntPtr handle) : base (handle)
         {
+            clickHandler = new EntityClickHandler ();
+            clickHandler.DisplayMenu += (sender, e) => {
+                var alert = UIAlertController.Create ("", "", UIAlertControllerStyle.ActionSheet);
+
+                foreach (var i in e.menuItems) {
+                    var localItem = i;
+                    var a = UIAlertAction.Create (i.Label, 0, (obj) => localItem.OnActivated ());
+                    alert.AddAction (a);
+                }
+
+                var cancelItem = UIAlertAction.Create ("Cancel", UIAlertActionStyle.Cancel, null);
+                alert.AddAction (cancelItem);
+                PresentViewController (alert, true, null);
+            };
         }
 
         public override void ViewDidLoad ()

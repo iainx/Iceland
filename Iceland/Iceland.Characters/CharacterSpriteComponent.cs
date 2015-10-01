@@ -85,37 +85,7 @@ namespace Iceland.Characters
             }
         }
 
-        #region Movement
 
-        static readonly string WalkingKey = "characterWalking";
-
-        public void FollowPath (GKGraphNode[] path, Action completion)
-        {
-            var dropFirst = path.Skip (1);
-            List<SKAction> sequence = new List<SKAction> ();
-
-            foreach (MapGraphNode node in dropFirst) {
-                CharacterEntity centity = (CharacterEntity)Entity;
-                CoreGraphics.CGPoint point = centity.Map.PositionToPoint (node.NodePosition, true);
-            
-                sequence.Add (SKAction.Run (() => {
-                    Direction = centity.CurrentPosition.DirectionToPosition (node.NodePosition);
-                    Walking = true;
-                }));
-
-                sequence.Add (SKAction.MoveTo (point, 0.8));
-                sequence.Add (SKAction.Run (() => {
-                    centity.CurrentPosition = node.NodePosition;
-                    Sprite.ZPosition = centity.Map.ZLevelForPosition (node.NodePosition);
-                    Walking = false;
-                }));
-            }
-
-            Sprite.RemoveActionForKey (WalkingKey);
-            sequence.Add (SKAction.Run (completion));
-            Sprite.RunAction (SKAction.Sequence (sequence.ToArray ()), WalkingKey);
-        }
-        #endregion
     }
 }
 

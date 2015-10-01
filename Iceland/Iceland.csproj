@@ -106,6 +106,14 @@
     <Compile Include="Iceland.Characters\CharacterSpriteComponent.cs" />
     <Compile Include="Iceland.Characters\ClickableComponent.cs" />
     <Compile Include="Iceland.Characters\EntityNode.cs" />
+    <Compile Include="EntityClickHandler.cs" />
+    <Compile Include="Iceland.Characters\TalkableComponent.cs" />
+    <Compile Include="Iceland.Characters\IMenuAction.cs" />
+    <Compile Include="DisplayMenuArgs.cs" />
+    <Compile Include="MenuDescription.cs" />
+    <Compile Include="Iceland.Characters\LookableComponent.cs" />
+    <Compile Include="Iceland.Characters\MoveComponent.cs" />
+    <Compile Include="Iceland.Extensions\GKEntityExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -114,6 +122,7 @@
     <Folder Include="Resources\TileImages.atlas\" />
     <Folder Include="Resources\professor_walk_cycle_no_hat.atlas\" />
     <Folder Include="Resources\skeleton_walk_cycle.atlas\" />
+    <Folder Include="Iceland.Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <AtlasTexture Include="Resources\TileImages.atlas\beach.png" />

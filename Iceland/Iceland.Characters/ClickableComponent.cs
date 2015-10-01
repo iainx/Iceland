@@ -6,6 +6,7 @@ namespace Iceland.Characters
 {
     public class ClickableComponent : GKComponent
     {
+        public static readonly string EntityClickedNotification = "EntityClicked";
         public ClickableComponent ()
         {
         }
@@ -13,7 +14,7 @@ namespace Iceland.Characters
         public void DoClick ()
         {
             var nc = NSNotificationCenter.DefaultCenter;
-            nc.PostNotificationName ("EntityClicked", Entity);
+            nc.PostNotificationName (EntityClickedNotification, Entity);
         }
     }
 }
