@@ -47,6 +47,23 @@ namespace Iceland
             var scene = SKNode.FromFile<GameScene> ("GameScene");
             scene.ScaleMode = SKSceneScaleMode.AspectFill;
 
+            var redbox = new SKSpriteNode (UIColor.Red, new CoreGraphics.CGSize (100, 100));
+            var bluebox = new SKSpriteNode (UIColor.Blue, new CoreGraphics.CGSize (50, 50));
+            var greenbox = new SKSpriteNode (UIColor.Green, new CoreGraphics.CGSize (25, 25));
+
+            redbox.AnchorPoint = new CoreGraphics.CGPoint (0, 0);
+            redbox.Position = new CoreGraphics.CGPoint (0, 0);
+            redbox.Add (bluebox);
+
+            bluebox.Add (greenbox);
+            bluebox.Position = CoreGraphics.CGPoint.Empty;
+            bluebox.AnchorPoint = CoreGraphics.CGPoint.Empty;
+
+            greenbox.Position = CoreGraphics.CGPoint.Empty;
+            greenbox.AnchorPoint = CoreGraphics.CGPoint.Empty;
+
+            scene.Add (redbox);
+
             // Present the scene.
             skView.PresentScene (scene);
         }

@@ -25,28 +25,50 @@ namespace Iceland
             player = new Professor ();
             skeleton = new Skeleton ();
             map = Map.Map.LoadFromFile ("pond.tmx");
+
+            Size = new CoreGraphics.CGSize (map.Width * 100, map.Height * 50 + 300);
+            AnchorPoint = new CGPoint (0.5, 1);
         }
 
         void SetCameraConstraints (SKCameraNode camera, SKSpriteNode sprite)
         {
-            var zeroRange = new SKRange (0, 200);
+            // Constrain the camera to the player
+            var zeroRange = new SKRange (0, 0);
             SKConstraint playerConstraint = SKConstraint.CreateDistance (zeroRange, sprite);
-            camera.Constraints = new SKConstraint[]{ playerConstraint };
+
+            var scaledSize = new CGSize (Size.Width * camera.XScale, Size.Height * camera.YScale);
+            var contentRect = mapNode.CalculateAccumulatedFrame ();
+            contentRect = new CGRect (contentRect.X, contentRect.Y, contentRect.Width, 900);
+                
+            nfloat xInset = (nfloat)Math.Min ((scaledSize.Width / 2.0) + 10, contentRect.Width / 2.0);
+            nfloat yInset = (nfloat)Math.Min ((scaledSize.Height / 2.0) + 10, contentRect.Height / 2.0);
+
+            var insetRect = contentRect.Inset (xInset, yInset);
+
+            var xRange = new SKRange (insetRect.GetMinX (), insetRect.GetMaxX ());
+            var yRange = new SKRange (insetRect.GetMinY (), insetRect.GetMaxY ());
+
+            var levelEdgeConstraint = SKConstraint.CreateRestriction (xRange, yRange);
+            levelEdgeConstraint.ReferenceNode = this;
+
+            camera.Constraints = new[] { playerConstraint, levelEdgeConstraint };
         }
 
         public override void DidMoveToView (SKView view)
         {
             cameraNode = new SKCameraNode ();
             Camera = cameraNode;
+            Camera.XScale = 1.0f;
+            Camera.YScale = 1.0f;
             AddChild (cameraNode);
 
             mapNode = new MapNode (map);
-            mapNode.Position = new CGPoint ((Frame.Width - mapNode.Frame.Width) / 2, Frame.Height / 2 + 200);
+            mapNode.Position = new CGPoint (mapNode.Position.X, mapNode.Position.Y + 100);
             AddChild (mapNode);
 
             mapNode.MapClicked += new EventHandler<MapClickedArgs>(HandleTouchOnMap);
 
-            player.CurrentPosition = new Map.Map.Position { Row = 0, Column = 1 };
+            player.CurrentPosition = new Map.Map.Position { Row = 0, Column = 0 };
             player.Map = map;
             mapNode.AddCharacter (player);
 
@@ -58,6 +80,11 @@ namespace Iceland
             skeleton.Map = map;
             mapNode.AddCharacter (skeleton);
 
+            var playerPosInMap = map.PositionToPoint (player.CurrentPosition);
+            var cx = Frame.Width / 2;
+            var cy = Frame.Height / 2;
+
+            //mapNode.Position = new CGPoint (0, 0);
             SetCameraConstraints (cameraNode, comp.Sprite);
         }
 

@@ -16,6 +16,7 @@ namespace Iceland.Map
         public MapNode (Map map)
         {
             this.map = map;
+            Name = "Map";
 
             UserInteractionEnabled = true;
 
