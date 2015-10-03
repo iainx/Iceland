@@ -9,6 +9,8 @@ namespace Iceland.Characters
     {
         public Map.Map.Position CurrentPosition { get; set; }
         public Map.Map Map { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }
 

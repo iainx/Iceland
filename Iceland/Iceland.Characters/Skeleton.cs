@@ -7,6 +7,8 @@ namespace Iceland.Characters
     {
         public Skeleton ()
         {
+            Name = "Death";
+            Description = "A cold looking skeleton";
             AddComponent (new CharacterSpriteComponent ("skeleton_walk_cycle", this));
             AddComponent (new ClickableComponent ());
             AddComponent (new TalkableComponent ());

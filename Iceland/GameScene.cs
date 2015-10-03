@@ -80,11 +80,6 @@ namespace Iceland
             skeleton.Map = map;
             mapNode.AddCharacter (skeleton);
 
-            var playerPosInMap = map.PositionToPoint (player.CurrentPosition);
-            var cx = Frame.Width / 2;
-            var cy = Frame.Height / 2;
-
-            //mapNode.Position = new CGPoint (0, 0);
             SetCameraConstraints (cameraNode, comp.Sprite);
         }
 

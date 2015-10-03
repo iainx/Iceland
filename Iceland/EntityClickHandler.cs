@@ -35,7 +35,7 @@ namespace Iceland
                 MenuDescription md = new MenuDescription { Label = action.Label };
                 md.Activated += (object sender, EventArgs e) => {
                     MoveComponent comp = (MoveComponent)GameScene.player.GetComponent (typeof (MoveComponent));
-                    comp.MoveEntity (new Map.Map.Position {Row=7, Column = 3}, () => action.Activate ());
+                    comp.MoveEntity (new Map.Map.Position {Row=7, Column = 3}, () => action.Activate (GameScene.player));
                 };
                 mds.Add (md);
             }

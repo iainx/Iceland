@@ -8,6 +8,7 @@ namespace Iceland.Characters
         {
             AddComponent (new CharacterSpriteComponent ("professor_walk_cycle_no_hat", this));
             AddComponent (new MoveComponent ());
+            Name = "The Professor";
         }
     }
 }

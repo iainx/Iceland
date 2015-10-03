@@ -13,9 +13,9 @@ namespace Iceland.Characters
         {
         }
 
-        public void Activate ()
+        public void Activate (CharacterEntity playerEntity)
         {
-            Console.WriteLine ("Talking to");
+            Console.WriteLine ("Talking to {0}", ((CharacterEntity)Entity).Description);
         }
     }
 }
