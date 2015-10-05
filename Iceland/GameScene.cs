@@ -38,7 +38,7 @@ namespace Iceland
 
             var scaledSize = new CGSize (Size.Width * camera.XScale, Size.Height * camera.YScale);
             var contentRect = mapNode.CalculateAccumulatedFrame ();
-            contentRect = new CGRect (contentRect.X, contentRect.Y, contentRect.Width, 900);
+            contentRect = new CGRect (contentRect.X, contentRect.Y, contentRect.Width, contentRect.Height + 300);
                 
             nfloat xInset = (nfloat)Math.Min ((scaledSize.Width / 2.0) + 10, contentRect.Width / 2.0);
             nfloat yInset = (nfloat)Math.Min ((scaledSize.Height / 2.0) + 10, contentRect.Height / 2.0);
@@ -58,8 +58,8 @@ namespace Iceland
         {
             cameraNode = new SKCameraNode ();
             Camera = cameraNode;
-            Camera.XScale = 1.0f;
-            Camera.YScale = 1.0f;
+            Camera.XScale = 0.5f;
+            Camera.YScale = 0.5f;
             AddChild (cameraNode);
 
             mapNode = new MapNode (map);
