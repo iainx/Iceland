@@ -114,6 +114,9 @@
     <Compile Include="Iceland.Characters\LookableComponent.cs" />
     <Compile Include="Iceland.Characters\MoveComponent.cs" />
     <Compile Include="Iceland.Extensions\GKEntityExtensions.cs" />
+    <Compile Include="Iceland.Conversation\Item.cs" />
+    <Compile Include="Iceland.Conversation\Details.cs" />
+    <Compile Include="ConversationHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -123,6 +126,7 @@
     <Folder Include="Resources\professor_walk_cycle_no_hat.atlas\" />
     <Folder Include="Resources\skeleton_walk_cycle.atlas\" />
     <Folder Include="Iceland.Extensions\" />
+    <Folder Include="Iceland.Conversation\" />
   </ItemGroup>
   <ItemGroup>
     <AtlasTexture Include="Resources\TileImages.atlas\beach.png" />

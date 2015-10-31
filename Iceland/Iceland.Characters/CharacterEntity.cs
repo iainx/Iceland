@@ -2,6 +2,7 @@
 using GameplayKit;
 
 using Iceland.Map;
+using Iceland.Conversation;
 
 namespace Iceland.Characters
 {

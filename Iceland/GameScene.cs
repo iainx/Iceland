@@ -26,7 +26,7 @@ namespace Iceland
             skeleton = new Skeleton ();
             map = Map.Map.LoadFromFile ("pond.tmx");
 
-            Size = new CoreGraphics.CGSize (map.Width * 100, map.Height * 50 + 300);
+            Size = new CGSize (map.Width * 100, map.Height * 50 + 300);
             AnchorPoint = new CGPoint (0.5, 1);
         }
 
@@ -66,7 +66,7 @@ namespace Iceland
             mapNode.Position = new CGPoint (mapNode.Position.X, mapNode.Position.Y + 100);
             AddChild (mapNode);
 
-            mapNode.MapClicked += new EventHandler<MapClickedArgs>(HandleTouchOnMap);
+            mapNode.MapClicked += HandleTouchOnMap;
 
             player.CurrentPosition = new Map.Map.Position { Row = 0, Column = 0 };
             player.Map = map;

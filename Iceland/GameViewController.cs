@@ -8,6 +8,7 @@ namespace Iceland
     public partial class GameViewController : UIViewController
     {
         EntityClickHandler clickHandler;
+        ConversationHandler conversationHandler;
 
         public GameViewController (IntPtr handle) : base (handle)
         {
@@ -25,6 +26,8 @@ namespace Iceland
                 alert.AddAction (cancelItem);
                 PresentViewController (alert, true, null);
             };
+
+            conversationHandler = new ConversationHandler (this);
         }
 
         public override void ViewDidLoad ()
@@ -33,7 +36,7 @@ namespace Iceland
 
             // Code to start the Xamarin Test Cloud Agent
             #if ENABLE_TEST_CLOUD
-            Xamarin.Calabash.Start();
+            //Xamarin.Calabash.Start();
             #endif
 
             // Configure the view.
