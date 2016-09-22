@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Foundation;
 using GameplayKit;
 
 using Iceland.Extensions;
@@ -12,16 +13,24 @@ namespace Iceland.Characters
             get { return "Look at"; } 
         }
 
-        public LookableComponent ()
-        {
+        public bool OnlyIfCollected {
+            get {
+                return false;
+            }
         }
 
-        public void Activate (CharacterEntity playerEntity)
+        public bool OnlyIfDropped {
+            get {
+                return false;
+            }
+        }
+
+        public void Activate (Entity playerEntity, Entity otherEntity)
         {
             CharacterSpriteComponent spriteComp = playerEntity.GetComponent<CharacterSpriteComponent> ();
-            spriteComp.LookAt ((CharacterEntity)Entity);
+            spriteComp.LookAt ((Entity)Entity);
 
-            Console.WriteLine ("Looking at {0}", ((CharacterEntity)Entity).Description);
+            LookHandler.StartLook (playerEntity, (Entity)Entity);
         }
     }
 }

@@ -1,0 +1,10 @@
+﻿{
+    "Id": "skirt",
+    "Name": "return 'Skirt'",
+    "TextureName": "robe-skirt.png",
+    "StartPosition": { "Row": 14, "Column": 14 },
+    "ActionPosition": { "Row": 14, "Column": 10 },
+    "LookCommand": "return 'A skull patterned skirt'",
+    "CollectCommand": "return 'I cant reach it', false"
+}
+

@@ -85,10 +85,10 @@ namespace Iceland.Characters
             }
         }
 
-        public void LookAt (CharacterEntity targetEntity)
+        public void LookAt (Entity targetEntity)
         {
-            CharacterEntity charEntity = (CharacterEntity)Entity;
-            Direction = charEntity.CurrentPosition.DirectionToPosition (targetEntity.CurrentPosition);
+            Entity charEntity = (Entity)Entity;
+            Direction = charEntity.Model.StartPosition.DirectionToPosition (targetEntity.Model.StartPosition);
         }
     }
 }

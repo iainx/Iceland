@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Foundation;
 using SpriteKit;
 using UIKit;
 
@@ -9,35 +10,26 @@ namespace Iceland
     {
         EntityClickHandler clickHandler;
         ConversationHandler conversationHandler;
+        LookHandler lookHandler;
+        CollectHandler collectHandler;
+
+        UIButton inventoryButton;
+
+        public static GameScene CurrentScene { get; private set; }
+
+        UIViewController menuController;
 
         public GameViewController (IntPtr handle) : base (handle)
         {
-            clickHandler = new EntityClickHandler ();
-            clickHandler.DisplayMenu += (sender, e) => {
-                var alert = UIAlertController.Create ("", "", UIAlertControllerStyle.ActionSheet);
-
-                foreach (var i in e.menuItems) {
-                    var localItem = i;
-                    var a = UIAlertAction.Create (i.Label, 0, (obj) => localItem.OnActivated ());
-                    alert.AddAction (a);
-                }
-
-                var cancelItem = UIAlertAction.Create ("Cancel", UIAlertActionStyle.Cancel, null);
-                alert.AddAction (cancelItem);
-                PresentViewController (alert, true, null);
-            };
-
+            clickHandler = new EntityClickHandler (this);
             conversationHandler = new ConversationHandler (this);
+            lookHandler = new LookHandler (this);
+            collectHandler = new CollectHandler (this);
         }
 
         public override void ViewDidLoad ()
         {
             base.ViewDidLoad ();
-
-            // Code to start the Xamarin Test Cloud Agent
-            #if ENABLE_TEST_CLOUD
-            //Xamarin.Calabash.Start();
-            #endif
 
             // Configure the view.
             var skView = (SKView)View;
@@ -49,7 +41,9 @@ namespace Iceland
             // Create and configure the scene.
             var scene = SKNode.FromFile<GameScene> ("GameScene");
             scene.ScaleMode = SKSceneScaleMode.AspectFill;
+            CurrentScene = scene;
 
+            /*
             var redbox = new SKSpriteNode (UIColor.Red, new CoreGraphics.CGSize (100, 100));
             var bluebox = new SKSpriteNode (UIColor.Blue, new CoreGraphics.CGSize (50, 50));
             var greenbox = new SKSpriteNode (UIColor.Green, new CoreGraphics.CGSize (25, 25));
@@ -66,9 +60,30 @@ namespace Iceland
             greenbox.AnchorPoint = CoreGraphics.CGPoint.Empty;
 
             scene.Add (redbox);
-
+            */
             // Present the scene.
             skView.PresentScene (scene);
+
+            inventoryButton = new UIButton (UIButtonType.InfoDark);
+            inventoryButton.TranslatesAutoresizingMaskIntoConstraints = false;
+            View.AddSubview (inventoryButton);
+
+            inventoryButton.TouchUpInside += (sender, e) => {
+                var ivc = new InventoryViewController { Manager = CurrentScene.InvManager };
+                ivc.ItemActivated += (s, args) => {
+                    DismissViewController (false, null);
+                    MenuDisplayController.DisplayMenuForItem (args.Item, this);
+                };
+
+                PresentViewController (ivc, false, null);
+            };
+
+            var viewsDict = new NSDictionary ("inventory", inventoryButton);
+            var constraints = NSLayoutConstraint.FromVisualFormat ("|-20-[inventory]", NSLayoutFormatOptions.AlignAllTop, null, viewsDict);
+            skView.AddConstraints (constraints);
+
+            constraints = NSLayoutConstraint.FromVisualFormat ("V:|-20-[inventory]", NSLayoutFormatOptions.AlignAllTop, null, viewsDict);
+            skView.AddConstraints (constraints);
         }
 
         public override bool ShouldAutorotate ()

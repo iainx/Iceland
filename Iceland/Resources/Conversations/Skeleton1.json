@@ -1,0 +1,61 @@
+[{
+    "id": 1,
+    "player": ["Erm, hello?"],
+    "character": ["What is it, pesky human?"],
+    "responses": "return SkeletonConversationResponses ()"
+},
+{
+    "id": 2,
+    "player": ["Who are you?"],
+    "character": ["I am Death!", "The Grim Reaper!", "The collector of souls"],
+    "responses": "return {3, 4}",
+    "actionScripts": ["introduced = true"]
+},
+{
+    "id": 3,
+    "player": ["Aren't you cold?"],
+    "character": ["Of course I am, stupid human"],
+    "responses": "return {5}"
+},
+{
+    "id": 4,
+    "player": ["Do you realise you've got no clothes on?"],
+    "character": ["Of course I do. I'm freezing"],
+    "responses": "return {5}"
+},
+{
+    "id": 5,
+    "player": ["Where are your clothes?"],
+    "character": ["I've lost them", "Or someone stole them", "Can you find them?"],
+    "responses": "if inventory:ContainsItemNamed('hood') then return {9} else return {6, 7} end"
+},
+{
+    "id": 6,
+    "player": ["Ok"],
+    "actionScripts": ["questAccepted = true"]
+},
+{
+    "id": 7,
+    "player": ["Nope"]
+},
+{
+    "id": 8,
+    "player": ["Sorry to disturb you"]
+},
+{
+    "id": 9,
+    "player": ["Is this your hood?"],
+    "character": ["Oh, yes, thank you, not so useless human"],
+    "actionScripts":["inventory:RemoveItemNamed('hood')",
+                     "gaveHood = true"],
+    "responses": "return {1}"
+},
+{
+    "id": 10,
+    "character": ["I'm all wrapped up nice and warm now. Now leave me"]
+},
+{
+    "id": 11,
+    "player": ["What is it you want me to find again?"],
+    "character": ["My clothes you insufferable fool."],
+}]

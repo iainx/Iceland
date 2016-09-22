@@ -6,6 +6,7 @@ using SpriteKit;
 using UIKit;
 
 using Iceland.Characters;
+using Iceland.Extensions;
 using Iceland.Map;
 
 using GameplayKit;
@@ -14,19 +15,34 @@ namespace Iceland
 {
     public class GameScene : SKScene
     {
-        public static CharacterEntity player;
-        CharacterEntity skeleton;
-        Map.Map map;
+        public Entity Player { get; private set; }
+        public Map.Map CurrentMap { get; private set; }
+        public InventoryManager InvManager { get; private set; }
+
         MapNode mapNode;
         SKCameraNode cameraNode;
 
         public GameScene (IntPtr handle) : base (handle)
         {
-            player = new Professor ();
-            skeleton = new Skeleton ();
-            map = Map.Map.LoadFromFile ("pond.tmx");
+            Player = new Professor ();
+            var invComp = Player.GetComponent<InventoryComponent> ();
+            InvManager = new InventoryManager (invComp);
 
-            Size = new CGSize (map.Width * 100, map.Height * 50 + 300);
+            LuaEngine.SetGlobalVariable ("inventory", InvManager);
+            LuaEngine.SetGlobalVariable ("game", this);
+
+            try {
+                LuaEngine.ExecuteScriptFromFile ("Main.lua");
+            } catch (Exception e) {
+                Console.WriteLine ($"{e}");
+            }
+        }
+
+        public void LoadMap (string mapName)
+        {
+            CurrentMap = Map.Map.LoadFromFile ("pond.tmx");
+
+            Size = new CGSize (CurrentMap.Width * 100, CurrentMap.Height * 50 + 300);
             AnchorPoint = new CGPoint (0.5, 1);
         }
 
@@ -54,6 +70,20 @@ namespace Iceland
             camera.Constraints = new[] { playerConstraint, levelEdgeConstraint };
         }
 
+        void SetupItemPositions ()
+        {
+            foreach (var item in ItemFactory.Items) {
+                mapNode.AddItem (item);
+            }
+        }
+
+        void SetupCharacterPositions ()
+        {
+            foreach (var character in CharacterFactory.Characters) {
+                mapNode.AddCharacter (character);
+            }
+        }
+
         public override void DidMoveToView (SKView view)
         {
             cameraNode = new SKCameraNode ();
@@ -62,23 +92,19 @@ namespace Iceland
             Camera.YScale = 0.5f;
             AddChild (cameraNode);
 
-            mapNode = new MapNode (map);
+            mapNode = new MapNode (CurrentMap);
             mapNode.Position = new CGPoint (mapNode.Position.X, mapNode.Position.Y + 100);
             AddChild (mapNode);
 
             mapNode.MapClicked += HandleTouchOnMap;
+            mapNode.AddCharacter (Player);
 
-            player.CurrentPosition = new Map.Map.Position { Row = 0, Column = 0 };
-            player.Map = map;
-            mapNode.AddCharacter (player);
-
-            var comp = (CharacterSpriteComponent)player.GetComponent (typeof(CharacterSpriteComponent));
+            var comp = (CharacterSpriteComponent)Player.GetComponent (typeof(CharacterSpriteComponent));
             comp.Direction = Direction.North;
             comp.Walking = false;
 
-            skeleton.CurrentPosition = new Map.Map.Position { Row = 6, Column = 3 };
-            skeleton.Map = map;
-            mapNode.AddCharacter (skeleton);
+            SetupItemPositions ();
+            SetupCharacterPositions ();
 
             SetCameraConstraints (cameraNode, comp.Sprite);
         }
@@ -86,8 +112,12 @@ namespace Iceland
         void HandleTouchOnMap (object sender, MapClickedArgs args)
         {
             Map.Map.Position destination = args.ClickPosition;
-            MoveComponent comp = (MoveComponent)player.GetComponent (typeof(MoveComponent));
-            comp.MoveEntity (destination, null);
+            MoveComponent comp = (MoveComponent)Player.GetComponent (typeof(MoveComponent));
+            comp.MoveEntity (destination, (bool success) => {
+                if (!success) {
+                    Console.WriteLine ("Can't do that");
+                }
+            });
         }
 
         public override void Update (double currentTime)

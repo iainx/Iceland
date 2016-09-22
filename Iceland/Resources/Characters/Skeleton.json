@@ -1,0 +1,18 @@
+﻿{
+    "Id": "skeleton",
+    "Name": "if introduced == true then return 'Death' else return 'A skeleton' end",
+    "Description": "if gaveHood == true then return 'A toasty warm skeleton' else return 'A naked skeleton' end",
+    "ConversationFiles": ["Skeleton1.json"],
+    "TextureName": "skeleton_walk_cycle",
+    "ConversationScript": "if gaveHood == true then return 0, 10 else return 0 end",
+    "StartPosition": { "Row": 6, "Column": 3 },
+    "ActionPosition": { "Row": 7, "Column": 3},
+    "TalkCommand": "if gaveHood == true then return 0, 10 else return 0 end",
+    "GiveCommand": {
+            "hood": "DoHoodFunction ()",
+            "jacket": "DoJacketFunction ()",
+            "skirt": "DoSkirtFunction ()",
+            "default": "DoNothingFunction ()"
+    },
+    "LookCommand": "if gaveHood == true then return 'A toasty warm skeleton' else return 'A naked skeleton' end",
+}

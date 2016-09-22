@@ -286,9 +286,86 @@ namespace Iceland.Map
             return !(position.Row < 0 || position.Column < 0 || position.Row >= Height || position.Column >= Width);
         }
 
-        public GKGraphNode[] FindPath (Position from, Position to)
+        public GKGraphNode[] FindPath (Position from, Position to, bool exact = true)
         {
-            return Graph.FindPath (from, to);
+            var path = Graph.FindPath (from, to);
+
+            if (path != null && path.Length > 0) {
+                return path;
+            }
+
+            return exact ? path : FindPathToNearestPoint (from, to);
+        }
+
+        public GKGraphNode[] FindPathToNearestPoint (Position from, Position to)
+        {
+            for (var i = 1; i < 3; i++) {
+                var path = FindPathToNearestPoint (from, to, i);
+                if (path != null && path.Length > 0) {
+                    return path;
+                }
+            }
+
+            return null;
+        }
+
+        public GKGraphNode[] FindPathToNearestPoint (Position from, Position to, int distance)
+        {
+            var minR = to.Row - distance;
+            var maxR = to.Row + distance;
+            var minC = to.Column - distance;
+            var maxC = to.Column + distance;
+
+            GKGraphNode [] path;
+
+            // Check min/max rows
+            for (var c = minC + 1; c < maxC; c++) {
+                path = FindPath (from, new Position { Row = minR, Column = c });
+                if (path != null && path.Length > 0) {
+                    return path;
+                }
+
+                path = FindPath (from, new Position { Row = maxR, Column = c });
+                if (path != null && path.Length > 0) {
+                    return path;
+                }
+            }
+
+            // Check columns
+            for (var r = minR + 1; r < maxR; r++) {
+                path = FindPath (from, new Position { Row = r, Column = minC });
+                if (path != null && path.Length > 0) {
+                    return path;
+                }
+
+                path = FindPath (from, new Position { Row = r, Column = maxC });
+                if (path != null && path.Length > 0) {
+                    return path;
+                }
+            }
+
+            // Check corners
+            path = FindPath (from, new Position { Row = minR, Column = minC });
+            if (path != null && path.Length > 0) {
+                return path;
+            }
+
+            path = FindPath (from, new Position { Row = minR, Column = maxC });
+            if (path != null && path.Length > 0) {
+                return path;
+            }
+
+            path = FindPath (from, new Position { Row = maxR, Column = minC });
+            if (path != null && path.Length > 0) {
+                return path;
+            }
+
+            path = FindPath (from, new Position { Row = maxR, Column = maxC });
+            if (path != null && path.Length > 0) {
+                return path;
+            }
+
+            return null;
         }
     }
 }

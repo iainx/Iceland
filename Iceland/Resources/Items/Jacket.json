@@ -1,0 +1,8 @@
+﻿{
+    "Id": "jacket",
+    "Name": "return 'Jacket'",
+    "TextureName": "robe-jacket.png",
+    "StartPosition": { "Row": 5, "Column": 0 },
+    "ActionPosition": { "Row": 5, "Column": 0 },
+    "LookCommand": "return 'A jacket (covered in skulls)'"
+}

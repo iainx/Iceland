@@ -69,6 +69,15 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Xamarin.iOS" />
+    <Reference Include="KeraLua.iOS">
+      <HintPath>..\Components\NLua-1.3.2.6\lib\ios-unified\KeraLua.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="NLua.iOS">
+      <HintPath>..\Components\NLua-1.3.2.6\lib\ios-unified\NLua.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
@@ -76,14 +85,22 @@
   <ItemGroup>
     <BundleResource Include="Resources\GameScene.sks" />
     <BundleResource Include="Resources\pond.tmx" />
+    <BundleResource Include="Resources\Conversations\Skeleton1.json" />
+    <BundleResource Include="Resources\SoulCollectionAgencyInc\Main.lua" />
+    <BundleResource Include="Resources\Items\Hood.json" />
+    <BundleResource Include="Resources\Items\Jacket.json" />
+    <BundleResource Include="Resources\Items\Skirt.json" />
+    <BundleResource Include="Resources\Characters\Skeleton.json" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
     <InterfaceDefinition Include="Main.storyboard" />
+    <InterfaceDefinition Include="InventoryViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -102,7 +119,6 @@
     <Compile Include="Iceland.Characters\Professor.cs" />
     <Compile Include="Iceland.Map\MapGraph.cs" />
     <Compile Include="Iceland.Map\MapGraphNode.cs" />
-    <Compile Include="Iceland.Characters\CharacterEntity.cs" />
     <Compile Include="Iceland.Characters\CharacterSpriteComponent.cs" />
     <Compile Include="Iceland.Characters\ClickableComponent.cs" />
     <Compile Include="Iceland.Characters\EntityNode.cs" />
@@ -117,6 +133,28 @@
     <Compile Include="Iceland.Conversation\Item.cs" />
     <Compile Include="Iceland.Conversation\Details.cs" />
     <Compile Include="ConversationHandler.cs" />
+    <Compile Include="Iceland.Characters\InventoryComponent.cs" />
+    <Compile Include="Iceland.Characters\CollectibleComponent.cs" />
+    <Compile Include="Iceland.Characters\Entity.cs" />
+    <Compile Include="Iceland.Characters\ItemSpriteComponent.cs" />
+    <Compile Include="ItemFactory.cs" />
+    <Compile Include="LookHandler.cs" />
+    <Compile Include="Iceland.Conversation\ConversationLoader.cs" />
+    <Compile Include="Iceland.Conversation\ConversationItem.cs" />
+    <Compile Include="Iceland.Conversation\ConversationFactory.cs" />
+    <Compile Include="LuaEngine.cs" />
+    <Compile Include="InventoryManager.cs" />
+    <Compile Include="Iceland.Characters\EntityModel.cs" />
+    <Compile Include="CharacterFactory.cs" />
+    <Compile Include="CollectHandler.cs" />
+    <Compile Include="InventoryViewController.cs" />
+    <Compile Include="InventoryViewController.designer.cs">
+      <DependentUpon>InventoryViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuDisplayController.cs" />
+    <Compile Include="Iceland.Characters\GiveableComponent.cs" />
+    <Compile Include="Iceland.Characters\UseableComponent.cs" />
+    <Compile Include="GiveHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -127,6 +165,10 @@
     <Folder Include="Resources\skeleton_walk_cycle.atlas\" />
     <Folder Include="Iceland.Extensions\" />
     <Folder Include="Iceland.Conversation\" />
+    <Folder Include="Resources\Conversations\" />
+    <Folder Include="Resources\SoulCollectionAgencyInc\" />
+    <Folder Include="Resources\Items\" />
+    <Folder Include="Resources\Characters\" />
   </ItemGroup>
   <ItemGroup>
     <AtlasTexture Include="Resources\TileImages.atlas\beach.png" />
@@ -297,5 +339,57 @@
     <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-6.png" />
     <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-7.png" />
     <AtlasTexture Include="Resources\skeleton_walk_cycle.atlas\skeleton_walk_cycle-3-8.png" />
+    <AtlasTexture Include="Resources\Items.atlas\robe-hood.png" />
+    <AtlasTexture Include="Resources\Items.atlas\robe-jacket.png" />
+    <AtlasTexture Include="Resources\Items.atlas\robe-skirt.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_arrowDownGrey.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_arrowDownWhite.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_arrowUpGrey.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_arrowUpWhite.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_box.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_boxCheckmark.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_boxCross.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_boxTick.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button00.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button01.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button02.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button03.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button04.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button05.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button06.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button07.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button08.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button09.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button10.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button11.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button12.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button13.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button14.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_button15.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_checkmarkGrey.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_checkmarkWhite.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_circle.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_crossGrey.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_crossWhite.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_panel.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_sliderDown.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_sliderEnd.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_sliderHorizontal.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_sliderLeft.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_sliderRight.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_sliderUp.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_sliderVertical.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_tickGrey.png" />
+    <AtlasTexture Include="Resources\onscreendisplay.atlas\grey_tickWhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="json.net">
+      <Version>7.0.1</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="NLua">
+      <Version>1.3.2.6</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
 </Project>

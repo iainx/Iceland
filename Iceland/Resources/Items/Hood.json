@@ -1,0 +1,8 @@
+﻿{
+    "id": "hood",
+    "Name": "return 'Hood'",
+    "TextureName": "robe-hood.png",
+    "StartPosition": { "Row": 0, "Column": 7 },
+    "ActionPosition": { "Row": 0, "Column": 7 },
+    "LookCommand": "return 'A hood covered in skulls'"
+}

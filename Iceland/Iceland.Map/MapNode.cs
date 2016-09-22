@@ -38,18 +38,64 @@ namespace Iceland.Map
 
                 idx++;
             }
+
+            var nc = NSNotificationCenter.DefaultCenter;
+            nc.AddObserver ((NSString)InventoryComponent.ItemCollectedNotification, HandleItemCollected);
+            nc.AddObserver ((NSString)InventoryComponent.ItemDroppedNotification, HandleItemDropped);
         }
 
-        public void AddCharacter (CharacterEntity character)
+        void HandleItemCollected (NSNotification note)
+        {
+            var entity = (Entity)note.Object;
+
+            RemoveItem (entity);
+        }
+
+        void HandleItemDropped (NSNotification note)
+        {
+            var entity = (Entity)note.Object;
+
+            AddItem (entity);
+        }
+
+        public void AddCharacter (Entity character)
         {
             CharacterSpriteComponent spriteComp = (CharacterSpriteComponent)character.GetComponent (typeof (CharacterSpriteComponent));
+            if (spriteComp == null) {
+                return;
+            }
+
             AddChild (spriteComp.Sprite);
 
-            CoreGraphics.CGPoint point = map.PositionToPoint (character.CurrentPosition, true);
+            CoreGraphics.CGPoint point = map.PositionToPoint (character.Model.StartPosition, true);
             spriteComp.Sprite.Position = point;
-            spriteComp.Sprite.ZPosition = map.ZLevelForPosition (character.CurrentPosition);
+            spriteComp.Sprite.ZPosition = map.ZLevelForPosition (character.Model.StartPosition);
         }
             
+        public void AddItem (Entity item)
+        {
+            ItemSpriteComponent spriteComp = (ItemSpriteComponent)item.GetComponent (typeof(ItemSpriteComponent));
+            if (spriteComp == null) {
+                return;
+            }
+
+            AddChild (spriteComp.Sprite);
+
+            CoreGraphics.CGPoint point = map.PositionToPoint (item.Model.StartPosition, true);
+            spriteComp.Sprite.Position = point;
+            spriteComp.Sprite.ZPosition = map.ZLevelForPosition (item.Model.StartPosition);
+        }
+
+        public void RemoveItem (Entity item)
+        {
+            ItemSpriteComponent spriteComp = (ItemSpriteComponent)item.GetComponent (typeof (ItemSpriteComponent));
+            if (spriteComp == null) {
+                return;
+            }
+
+            spriteComp.Sprite.RemoveFromParent ();
+        }
+
         public event EventHandler<MapClickedArgs> MapClicked;
 
         public override void TouchesEnded (NSSet touches, UIEvent evt)
