@@ -14,6 +14,12 @@ namespace Iceland.Characters
             }
         }
 
+        public int NumberOfEntitiesNeeded {
+            get {
+                return 2;
+            }
+        }
+
         public bool OnlyIfCollected {
             get {
                 return true;
@@ -31,16 +37,10 @@ namespace Iceland.Characters
             var entity = (Entity)Entity;
             var model = entity.Model;
 
-            var conversation = model.CurrentConversation;
-
-            if (conversation == null) {
-                return;
-            }
-
             CharacterSpriteComponent spriteComp = playerEntity.GetComponent<CharacterSpriteComponent> ();
-            spriteComp.LookAt ((Entity)Entity);
+            spriteComp.LookAt (otherEntity);
 
-            ConversationHandler.StartConversation (playerEntity, (Entity)Entity, conversation.Item1, conversation.Item2);
+            GiveHandler.StartGive (playerEntity, entity, otherEntity);
         }
     }
 }

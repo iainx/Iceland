@@ -35,6 +35,8 @@ namespace Iceland
                                              (NSString)RecipientEntityKey, recepientEntity,
                                              (NSString)ItemEntityKey, itemEntity);
             var nc = NSNotificationCenter.DefaultCenter;
+
+            Console.WriteLine ($"Giving {itemEntity.Name} to {recepientEntity.Name}");
             nc.PostNotificationName (GiveNotification, itemEntity, userInfo);    
         }
     }

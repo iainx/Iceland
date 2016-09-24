@@ -16,7 +16,7 @@ namespace Iceland
 
         public static Entity CreateCharacter (EntityModel model)
         {
-            var character = new Entity {
+            var character = new Character {
                 Name = model.Name,
             };
 

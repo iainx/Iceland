@@ -72,7 +72,7 @@ namespace Iceland
                 var ivc = new InventoryViewController { Manager = CurrentScene.InvManager };
                 ivc.ItemActivated += (s, args) => {
                     DismissViewController (false, null);
-                    MenuDisplayController.DisplayMenuForItem (args.Item, this);
+                    MenuDisplayController.DisplayMenuForItem (args.Item, this, clickHandler);
                 };
 
                 PresentViewController (ivc, false, null);

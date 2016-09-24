@@ -2,7 +2,7 @@
 
 namespace Iceland.Characters
 {
-    public class Professor : Entity
+    public class Professor : Character
     {
         public Professor ()
         {

@@ -15,6 +15,12 @@ namespace Iceland.Characters
             get { return "Talk to"; } 
         }
 
+        public int NumberOfEntitiesNeeded {
+            get {
+                return 1;
+            }
+        }
+
         public bool OnlyIfCollected {
             get {
                 return false;
@@ -26,6 +32,7 @@ namespace Iceland.Characters
                 return false;
             }
         }
+
 
         public void Activate (Entity playerEntity, Entity otherEntity)
         {

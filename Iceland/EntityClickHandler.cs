@@ -12,6 +12,9 @@ namespace Iceland
     {
         UIViewController controller;
 
+        public bool WaitingForEntityClick { get; set; }
+        public Action<Entity> CustomClickHandler { get; set; }
+
         public EntityClickHandler (UIViewController viewController)
         {
             var nc = NSNotificationCenter.DefaultCenter;
@@ -23,6 +26,11 @@ namespace Iceland
         void OnClicked (NSNotification note)
         {
             var entity = (Entity)note.Object;
+
+            if (CustomClickHandler != null) {
+                CustomClickHandler (entity);
+                return;
+            }
 
             List<MenuDescription> mds = new List<MenuDescription> ();
             foreach (var c in entity.Components) {
@@ -37,14 +45,7 @@ namespace Iceland
 
                 MenuDescription md = new MenuDescription { Label = action.Label };
                 md.Activated += (object sender, EventArgs e) => {
-                    MoveComponent comp = (MoveComponent)GameViewController.CurrentScene.Player.GetComponent (typeof (MoveComponent));
-                    comp.MoveEntity (entity.Model.ActionPosition, (bool success) => {
-                        if (success == false) {
-                            Console.WriteLine ("Can't do that");
-                            return;
-                        }
-                        action.Activate (GameViewController.CurrentScene.Player, null);
-                    });
+                    GameViewController.CurrentScene.Player.PerformAction (action, null, entity);
                 };
                 mds.Add (md);
             }

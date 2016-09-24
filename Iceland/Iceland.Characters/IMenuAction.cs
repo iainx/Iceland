@@ -10,6 +10,7 @@ namespace Iceland.Characters
         bool OnlyIfCollected { get; }
         bool OnlyIfDropped { get; }
 
+        int NumberOfEntitiesNeeded { get; }
         void Activate (Entity playerEntity, Entity otherEntity);
     }
 }

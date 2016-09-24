@@ -15,6 +15,12 @@ namespace Iceland.Characters
             }
         }
 
+        public int NumberOfEntitiesNeeded {
+            get {
+                return 1;
+            }
+        }
+
         public bool OnlyIfCollected {
             get {
                 return false;

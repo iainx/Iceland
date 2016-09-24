@@ -15,9 +15,11 @@ namespace Iceland
 {
     public class GameScene : SKScene
     {
-        public Entity Player { get; private set; }
+        public Character Player { get; private set; }
         public Map.Map CurrentMap { get; private set; }
         public InventoryManager InvManager { get; private set; }
+
+        public EntityClickHandler ClickHandler { get; set; }
 
         MapNode mapNode;
         SKCameraNode cameraNode;
@@ -111,6 +113,10 @@ namespace Iceland
 
         void HandleTouchOnMap (object sender, MapClickedArgs args)
         {
+            if (ClickHandler.WaitingForEntityClick) {
+                return;
+            }
+
             Map.Map.Position destination = args.ClickPosition;
             MoveComponent comp = (MoveComponent)Player.GetComponent (typeof(MoveComponent));
             comp.MoveEntity (destination, (bool success) => {

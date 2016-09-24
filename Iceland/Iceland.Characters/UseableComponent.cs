@@ -12,6 +12,12 @@ namespace Iceland.Characters
             }
         }
 
+        public int NumberOfEntitiesNeeded {
+            get {
+                return 1; // FIXME: This actually depends on the item. Some items may need to be used with another object.
+            }
+        }
+
         public bool OnlyIfCollected {
             get {
                 return true;

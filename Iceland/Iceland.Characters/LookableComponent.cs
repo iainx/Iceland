@@ -13,6 +13,12 @@ namespace Iceland.Characters
             get { return "Look at"; } 
         }
 
+        public int NumberOfEntitiesNeeded {
+            get {
+                return 1;
+            }
+        }
+
         public bool OnlyIfCollected {
             get {
                 return false;

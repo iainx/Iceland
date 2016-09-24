@@ -13,7 +13,7 @@ namespace Iceland.Characters
     public class MoveComponent : GKComponent
     {
         Queue<SKAction> currentWalk;
-        bool teleportation = false;
+        bool teleportation = true;
 
         public void MoveEntity (Map.Map.Position destination, Action<bool> completionHandler)
         {
